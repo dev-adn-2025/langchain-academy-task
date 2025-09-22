@@ -134,6 +134,26 @@ ENV/
 env.bak/
 venv.bak/
 lc-academy-env/
+module-1/.env
+module-1/studio/.env
+module-1/activity/poetry/chain/.env
+module-1/activity/poetry/route/.env
+module-1/activity/poetry/agent/.env
+
+module-2/.env
+module-2/studio/.env
+
+module-3/.env
+module-3/studio/.env
+
+module-4/.env
+module-4/studio/.env
+
+module-5/.env
+module-5/studio/.env
+
+module-6/.env
+module-6/studio/.env
 
 # Spyder project settings
 .spyderproject
