@@ -139,6 +139,7 @@ module-1/studio/.env
 module-1/activity/poetry/chain/.env
 module-1/activity/poetry/route/.env
 module-1/activity/poetry/agent/.env
+module-1/activity/poetry/agent-memory/.env
 
 module-2/.env
 module-2/studio/.env
