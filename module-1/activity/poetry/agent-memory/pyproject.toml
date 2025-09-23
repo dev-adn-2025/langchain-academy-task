@@ -12,7 +12,8 @@ dependencies = [
     "langgraph (>=0.6.7,<0.7.0)",
     "langgraph-prebuilt (>=0.6.4,<0.7.0)",
     "langchain-google-genai (>=2.1.12,<3.0.0)",
-    "python-dotenv (>=1.1.1,<2.0.0)"
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "langchain-ollama (>=0.3.8,<0.4.0)"
 ]
 
 [tool.poetry]

@@ -478,6 +478,22 @@ langchain-core = ">=0.3.75"
 pydantic = ">=2,<3"
 
 [[package]]
+name = "langchain-ollama"
+version = "0.3.8"
+description = "An integration package connecting Ollama and LangChain"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "langchain_ollama-0.3.8-py3-none-any.whl", hash = "sha256:79898316d5663c6b08bc758c82b4e136f826cad2be84b4a26be11f1b0ebf686a"},
+    {file = "langchain_ollama-0.3.8.tar.gz", hash = "sha256:ba22537bd4dac4424cb8063bb2930fc31c6704db94728b30b75b4db71ccb214e"},
+]
+
+[package.dependencies]
+langchain-core = ">=0.3.76,<1.0.0"
+ollama = ">=0.5.3,<1.0.0"
+
+[[package]]
 name = "langgraph"
 version = "0.6.7"
 description = "Building stateful, multi-actor applications with LLMs"
@@ -572,6 +588,22 @@ openai-agents = ["openai-agents (>=0.0.3)"]
 otel = ["opentelemetry-api (>=1.30.0)", "opentelemetry-exporter-otlp-proto-http (>=1.30.0)", "opentelemetry-sdk (>=1.30.0)"]
 pytest = ["pytest (>=7.0.0)", "rich (>=13.9.4)", "vcrpy (>=7.0.0)"]
 vcr = ["vcrpy (>=7.0.0)"]
+
+[[package]]
+name = "ollama"
+version = "0.5.4"
+description = "The official Python client for Ollama."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "ollama-0.5.4-py3-none-any.whl", hash = "sha256:6374c9bb4f2a371b3583c09786112ba85b006516745689c172a7e28af4d4d1a2"},
+    {file = "ollama-0.5.4.tar.gz", hash = "sha256:75857505a5d42e5e58114a1b78cc8c24596d8866863359d8a2329946a9b6d6f3"},
+]
+
+[package.dependencies]
+httpx = ">=0.27"
+pydantic = ">=2.9"
 
 [[package]]
 name = "orjson"
@@ -1394,4 +1426,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "e9c548fc44d938e3b8be09b2180b8548f126db180f7fb2ec7c27d01f903c3479"
+content-hash = "116d8002d8c671819c022760741d674896ab13dbc5e2ab51b818a9e48f46c356"
