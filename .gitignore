@@ -145,6 +145,7 @@ module-2/.env
 module-2/studio/.env
 module-2/activity/poetry/filtering-trimming/.env
 module-2/activity/poetry/chatbot-summarization/.env
+module-2/activity/poetry/chatbot-ext-memory/.env
 
 module-3/.env
 module-3/studio/.env
