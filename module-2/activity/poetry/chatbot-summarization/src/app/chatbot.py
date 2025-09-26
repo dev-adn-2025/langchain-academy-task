@@ -99,22 +99,25 @@ config = {"configurable": {"thread_id": "1"}}
 # Start conversation
 input_message = HumanMessage(content="hi! I'm Lance")
 output = graph.invoke({"messages": [input_message]}, config) 
-for m in output['messages'][-1:]:
-    m.pretty_print()
+# for m in output['messages'][-1:]:
+#     m.pretty_print()
 
 input_message = HumanMessage(content="what's my name?")
 output = graph.invoke({"messages": [input_message]}, config) 
-for m in output['messages'][-1:]:
-    m.pretty_print()
+# for m in output['messages'][-1:]:
+#     m.pretty_print()
 
 input_message = HumanMessage(content="i like the 49ers!")
 output = graph.invoke({"messages": [input_message]}, config) 
-for m in output['messages'][-1:]:
-    m.pretty_print()
+# for m in output['messages'][-1:]:
+#     m.pretty_print()
 
 input_message = HumanMessage(content="i like Nick Bosa, isn't he the highest paid defensive player?")
 output = graph.invoke({"messages": [input_message]}, config) 
-for m in output['messages'][-1:]:
+# for m in output['messages'][-1:]:
+#     m.pretty_print()
+
+for m in output['messages']:
     m.pretty_print()
 
 summary = graph.get_state(config).values.get("summary","")
