@@ -152,6 +152,7 @@ module-3/studio/.env
 
 module-4/.env
 module-4/studio/.env
+module-4/activity/poetry/parallel/.env
 
 module-5/.env
 module-5/studio/.env

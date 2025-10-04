@@ -1,51 +1,53 @@
-import operator
-from typing import Annotated
-from typing_extensions import TypedDict
-
-from langchain_core.documents import Document
-from langchain_core.messages import HumanMessage, SystemMessage
-
-from langchain_community.document_loaders import WikipediaLoader
-from langchain_community.tools import TavilySearchResults
-
 from langchain_google_genai import ChatGoogleGenerativeAI
-
-from langgraph.graph import StateGraph, START, END
-
 from dotenv import load_dotenv
+# Load environment variables from .env file
 load_dotenv()
-
-import os
-api_key = os.getenv("GOOGLE_API_KEY")
-
-if not api_key:
-    print("⚠️ No se encontró la variable GOOGLE_API_KEY. Verifica tu archivo .env o el entorno.")
-else:
-    print("✅ GOOGLE_API_KEY cargada correctamente (solo mostrando primeros 10 caracteres):", api_key[:10])
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
     temperature=0
 )
 
+from typing_extensions import TypedDict
+import operator
+from typing import Annotated
+
 class State(TypedDict):
     question: str
     answer: str
     context: Annotated[list, operator.add]
+
+from langgraph.graph import StateGraph, START, END
+from langchain_core.messages import HumanMessage, SystemMessage
+
+from langchain_community.document_loaders import WikipediaLoader
+# from langchain_community.tools import TavilySearchResults
+from langchain_tavily import TavilySearch
 
 def search_web(state):
     
     """ Retrieve docs from web search """
 
     # Search
-    tavily_search = TavilySearchResults(max_results=3)
+    # tavily_search = TavilySearchResults(max_results=3)
+    tavily_search = TavilySearch(max_results=3)
     search_docs = tavily_search.invoke(state['question'])
-
+    
      # Format
+    # formatted_search_docs = "\n\n---\n\n".join(
+    #     [
+    #         f'<Document href="{doc["url"]}">\n{doc["content"]}\n</Document>'
+    #         for doc in search_docs
+    #     ]
+    # )
+     # Extraer los resultados (lista de diccionarios)
+    results = search_docs.get("results", [])
+
+    # Formatear para el contexto
     formatted_search_docs = "\n\n---\n\n".join(
         [
-            f'<Document href="{doc["url"]}"/>\n{doc["content"]}\n</Document>'
-            for doc in search_docs
+            f'<Document href="{doc["url"]}" title="{doc["title"]}">\n{doc["content"]}\n</Document>'
+            for doc in results
         ]
     )
 
@@ -62,7 +64,7 @@ def search_wikipedia(state):
      # Format
     formatted_search_docs = "\n\n---\n\n".join(
         [
-            f'<Document source="{doc.metadata["source"]}" page="{doc.metadata.get("page", "")}"/>\n{doc.page_content}\n</Document>'
+            f'<Document source="{doc.metadata["source"]}" page="{doc.metadata.get("page", "")}">\n{doc.page_content}\n</Document>'
             for doc in search_docs
         ]
     )
@@ -79,11 +81,16 @@ def generate_answer(state):
 
     # Template
     answer_template = """Answer the question {question} using this context: {context}"""
-    answer_instructions = answer_template.format(question=question, 
-                                                       context=context)    
+    answer_instructions = answer_template.format(
+        question=question, 
+        context=context
+    )    
     
     # Answer
-    answer = llm.invoke([SystemMessage(content=answer_instructions)]+[HumanMessage(content=f"Answer the question.")])
+    answer = llm.invoke(
+        [SystemMessage(content=answer_instructions)] + 
+        [HumanMessage(content=f"Answer the question.")]
+    )
       
     # Append it to state
     return {"answer": answer}
@@ -103,3 +110,12 @@ builder.add_edge("search_wikipedia", "generate_answer")
 builder.add_edge("search_web", "generate_answer")
 builder.add_edge("generate_answer", END)
 graph = builder.compile()
+
+result = graph.invoke({
+    "question": "How were Nvidia's Q2 2024 earnings",
+    "answer": "",
+    "context": []
+})
+# print(result)
+print(result['answer'].content)
+
